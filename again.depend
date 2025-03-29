@@ -1,0 +1,66 @@
+# depslib dependency file v1.0
+1743002357 source:d:\folder\sdl2\again\main.cpp
+	"Game.h"
+
+1742287945 d:\folder\sdl2\again\commonfunc.h
+	<iostream>
+	<vector>
+	<string>
+	<SDL.h>
+	<SDL_image.h>
+	"Wall.h"
+
+1742287904 d:\folder\sdl2\again\wall.h
+	"CommonFunc.h"
+
+1742284024 d:\folder\sdl2\again\player.h
+	"CommonFunc.h"
+
+1743260764 d:\folder\sdl2\again\game.h
+	<SDL.h>
+	<SDL_image.h>
+	<SDL_ttf.h>
+	<iostream>
+	<string>
+	"Character.h"
+	"Attack.h"
+	"Item.h"
+	"Game.cpp"
+
+1743261600 d:\folder\sdl2\again\character.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	"Game.h"
+	"Character.cpp"
+
+1743263474 d:\folder\sdl2\again\character.cpp
+	"Character.h"
+	"Game.h"
+
+1743264033 d:\folder\sdl2\again\game.cpp
+	"Game.h"
+
+1743187273 d:\folder\sdl2\again\attack.h
+	"Game.h"
+	"Character.h"
+	<vector>
+	"Attack.cpp"
+
+1743261155 d:\folder\sdl2\again\attack.cpp
+	"Attack.h"
+	<cstdlib>
+	<ctime>
+	<algorithm>
+
+1743186332 d:\folder\sdl2\again\item.h
+	"Game.h"
+	"Character.h"
+	<vector>
+	"Item.cpp"
+
+1743258272 d:\folder\sdl2\again\item.cpp
+	"Item.h"
+	<cstdlib>
+	<ctime>
+
