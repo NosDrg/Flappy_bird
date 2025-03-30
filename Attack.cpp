@@ -32,17 +32,16 @@ void Attack::render(SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
         SDL_Rect attackRect = {x, z, width, height};
         SDL_RenderFillRect(renderer, &attackRect);
-    } else if (type == LASER) {
-        if (laserState == CHARGING) {
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 100);
-            SDL_Rect attackRect = { x, z, width, height };
-            SDL_RenderFillRect(renderer, &attackRect);
-        } else {
-            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 200);
-        }
-
+} else if (type == LASER) {
+    if (laserState == CHARGING) {
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 100);
+        SDL_Rect attackRect = { x, z, width, height };
+        SDL_RenderFillRect(renderer, &attackRect);
+    } else {
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 200);
         SDL_Rect laserRect = {0, z, 900, 10};
         SDL_RenderFillRect(renderer, &laserRect);
+        }
     }
 }
 
@@ -51,7 +50,7 @@ bool Attack::checkCollision(Character* character) {
     if (type == LASER && laserState == CHARGING) return false;
 
     SDL_Rect attackRect = {x, z, width, height};
-    SDL_Rect characterRect = {character->x, character->z, 20, 40};
+    SDL_Rect characterRect = {character->x, character->z, 40, 80};
 
     if (SDL_HasIntersection(&attackRect, &characterRect)) {
         character->takeDamage(damage);

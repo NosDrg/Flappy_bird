@@ -1,11 +1,16 @@
 #include "Character.h"
 #include "Game.h"
 
-Character::Character(int x, int z, SDL_Renderer* renderer) : x(x), z(z), health(100), invincible(false), gravityFlip(false), velocityZ(0) {
-    texture = IMG_LoadTexture(renderer, "character.png");
+Character::Character(int x, int z, SDL_Renderer* renderer) : x(x), z(z), health(100), invincible(false), gravityFlip(false), velocityZ(0), directionGravity(false) {
     if (!texture) {
         SDL_Log("Failed to load character texture: %s", IMG_GetError());
     }
+}
+
+void Character::setSize(int w, int h){
+    width = w;
+    height = h;
+
 }
 
 void Character::handleEvent(const SDL_Event& e) {
@@ -73,28 +78,37 @@ void Character::updateGravity() {
 }
 
 void Character::render(SDL_Renderer* renderer) {
-    SDL_Rect characterRect = {x, z, 40, 40};
+    if (invincible) {
+        texture = IMG_LoadTexture(renderer, "character//Ship2.png");
+    }
+    if(gravityFlip) {
+        texture = IMG_LoadTexture(renderer, "character//Ship3.png");
+    }
+    if(!invincible && !gravityFlip) {
+        texture = IMG_LoadTexture(renderer, "character//Ship1.png");
+
+    }
+
+    SDL_Rect characterRect = {x, z, width * 2 , height * 2 };
     if (texture) {
         SDL_RenderCopy(renderer, texture, NULL, &characterRect);
+    } else {
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &characterRect);
     }
-
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_Rect healthBar = { x - 5, z - 15, 100 / 2 , 5};
-    SDL_RenderFillRect(renderer, &healthBar);
 
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_Rect emptyBar = { x - 5, z - 15, health / 2 , 5};
+    SDL_Rect healthBar = { x + 10, z - 15, health / 2, 5};
+    SDL_RenderFillRect(renderer, &healthBar);
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_Rect emptyBar = { x + 10 + health / 2, z - 15, (100 - health) / 2, 5};
     SDL_RenderFillRect(renderer, &emptyBar);
 
-    if(invincible){
-        SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-        SDL_Rect rect = { x, z, 40, 20};
-        SDL_RenderFillRect(renderer, &rect);
-    }
 }
 
 Character::~Character() {
-    if(texture){
+if(texture){
         SDL_DestroyTexture(texture);
     }
 }

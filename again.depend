@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1743002357 source:d:\folder\sdl2\again\main.cpp
+1743267547 source:d:\folder\sdl2\again\main.cpp
 	"Game.h"
 
 1742287945 d:\folder\sdl2\again\commonfunc.h
@@ -16,7 +16,7 @@
 1742284024 d:\folder\sdl2\again\player.h
 	"CommonFunc.h"
 
-1743260764 d:\folder\sdl2\again\game.h
+1743352433 d:\folder\sdl2\again\game.h
 	<SDL.h>
 	<SDL_image.h>
 	<SDL_ttf.h>
@@ -27,39 +27,39 @@
 	"Item.h"
 	"Game.cpp"
 
-1743261600 d:\folder\sdl2\again\character.h
+1743342545 d:\folder\sdl2\again\character.h
 	<SDL.h>
 	<SDL_image.h>
 	<iostream>
 	"Game.h"
 	"Character.cpp"
 
-1743263474 d:\folder\sdl2\again\character.cpp
+1743351945 d:\folder\sdl2\again\character.cpp
 	"Character.h"
 	"Game.h"
 
-1743264033 d:\folder\sdl2\again\game.cpp
+1743352383 d:\folder\sdl2\again\game.cpp
 	"Game.h"
 
-1743187273 d:\folder\sdl2\again\attack.h
+1743267547 d:\folder\sdl2\again\attack.h
 	"Game.h"
 	"Character.h"
 	<vector>
 	"Attack.cpp"
 
-1743261155 d:\folder\sdl2\again\attack.cpp
+1743343188 d:\folder\sdl2\again\attack.cpp
 	"Attack.h"
 	<cstdlib>
 	<ctime>
 	<algorithm>
 
-1743186332 d:\folder\sdl2\again\item.h
+1743267547 d:\folder\sdl2\again\item.h
 	"Game.h"
 	"Character.h"
 	<vector>
 	"Item.cpp"
 
-1743258272 d:\folder\sdl2\again\item.cpp
+1743343583 d:\folder\sdl2\again\item.cpp
 	"Item.h"
 	<cstdlib>
 	<ctime>

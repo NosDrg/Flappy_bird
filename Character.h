@@ -14,9 +14,13 @@ public:
     void handleEvent(const SDL_Event& e);
     void update();
     void render(SDL_Renderer* renderer);
+    SDL_Surface* surface;
+    void setSize(int w, int h);
 //    void dash(int& mapOffset);
     ~Character();
 
+    int width = 40;
+    int height = 20;
     const int TILE_MAP = 5;
     int x, z;
     float velocityZ = 0;

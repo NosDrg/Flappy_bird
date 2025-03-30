@@ -28,7 +28,7 @@ public:
     void scoreGame(int value);
     void close();
     void renderMenu(SDL_Renderer* renderer, SDL_Texture* menu);
-    void renderEnd(SDL_Renderer* renderer, SDL_Texture* endmenu);
+    void renderEnd();
     ~Game();
 
     int score = 0;
@@ -38,19 +38,33 @@ public:
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    SDL_Texture* menu;
-    SDL_Texture* endmenu;
+    SDL_Texture* texture;
+    SDL_Texture* mapTexture;
+    SDL_Texture* menuTexture;
+    SDL_Texture* endTexture;
     bool running;
     Character* player1;
-    int currentMap;
+
+//    TTF_Font* font;
+
+    vector<SDL_Texture*> mapTextures;
+    int currentMapIndex;
+
     static const int TOTAL_MAPS = 5;
     float mapSpeed;
+
+    int mapWidth;
+    int mapHeight;
 
     int highScore;
 
     void processInput();
     void update();
     void render();
+    void loadMaps();
+    void switchToNextMap();
+    //void Gameover();
+    //void resetGame();
 };
 #include "Game.cpp"
 

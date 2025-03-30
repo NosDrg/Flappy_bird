@@ -36,7 +36,7 @@ bool Item::checkCollision(Character* character) {
     if (!active) return false;
 
     SDL_Rect itemRect = {x, z, size, size};
-    SDL_Rect characterRect = {character->x, character->z, 20, 40};
+    SDL_Rect characterRect = {character->x, character->z, 40, 80};
 
     if (SDL_HasIntersection(&itemRect, &characterRect)) {
         if (type == HEALTH) {
