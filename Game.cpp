@@ -263,11 +263,9 @@ void Game::renderEnd() {
         SDL_RenderFillRect(renderer, &background);
     }
 
-    // Hiển thị điểm số
     if (font) {
         SDL_Color white = {255, 255, 255, 255};
 
-        // Hiển thị "GAME OVER"
         SDL_Surface* surface = TTF_RenderText_Solid(font, "GAME OVER", white);
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_Rect rect = {SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 - 60, 200, 40};
@@ -275,7 +273,6 @@ void Game::renderEnd() {
         SDL_FreeSurface(surface);
         SDL_DestroyTexture(texture);
 
-        // Hiển thị điểm
         std::string scoreText = "Score: " + std::to_string(score);
         surface = TTF_RenderText_Solid(font, scoreText.c_str(), white);
         texture = SDL_CreateTextureFromSurface(renderer, surface);
