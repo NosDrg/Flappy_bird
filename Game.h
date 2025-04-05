@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <iostream>
 #include <string>
 #include "Character.h"
@@ -24,11 +25,11 @@ public:
     Game();
     bool init();
     void run();
-    void renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string& text, int x, int y);
+    void renderText(SDL_Renderer* renderer, TTF_Font* font, const string& text, int x, int y);
     void scoreGame(int value);
     void close();
-    void renderMenu(SDL_Renderer* renderer, SDL_Texture* menu);
-    void renderEnd();
+    void renderMenu(SDL_Renderer* renderer, SDL_Texture* texture);
+    void Gameover(SDL_Renderer*renderer, SDL_Texture* texture);
     ~Game();
 
     int score = 0;
@@ -40,8 +41,6 @@ private:
     SDL_Renderer* renderer;
     SDL_Texture* texture;
     SDL_Texture* mapTexture;
-    SDL_Texture* menuTexture;
-    SDL_Texture* endTexture;
     bool running;
     Character* player1;
 
@@ -63,8 +62,7 @@ private:
     void render();
     void loadMaps();
     void switchToNextMap();
-    //void Gameover();
-    //void resetGame();
+    void resetGame();
 };
 #include "Game.cpp"
 

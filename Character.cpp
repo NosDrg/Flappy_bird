@@ -40,7 +40,7 @@ void Character::update() {
             z -= gravity * 5;
         }
     }
-    if (z < 10 ) z = 10 ;
+    if (z < 0 ) z = 0 ;
     if (z >= 440) {
         z = 440;
         velocityZ = 0;

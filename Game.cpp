@@ -30,6 +30,10 @@ bool Game::init() {
         SDL_Log("Renderer could not be created! SDL_Error: %s", SDL_GetError());
         return false;
     }
+    if(!SDL_Init(SDL_INIT_AUDIO) < 0) {
+        SDL_Log("SDL_mixer could not initialize! SDL_Error: %s", SDL_GetError());
+        return false;
+    }
 
      loadMaps();
     if (mapTextures.empty()) {
@@ -37,8 +41,7 @@ bool Game::init() {
         return false;
     }
 
-    SDL_QueryTexture(mapTexture, NULL, NULL, &mapWidth, &mapHeight);
-    renderMenu(renderer, menuTexture);
+    renderMenu(renderer, texture);
 
     player1 = new Character(100, 200, renderer);
     running = true;
@@ -57,24 +60,25 @@ void Game::run() {
     }
 }
 
-/*void Game::Gameover() {
-    endgame = true;
+void Game::Gameover(SDL_Renderer* renderer, SDL_Texture* texture) {
+    texture = IMG_LoadTexture(renderer, "img//Endgame.png");
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+    SDL_RenderPresent( renderer );
 }
-*/
+
 void Game::update() {
-    endgame = true;
-//    if(endgame) return;
 
     player1->update();
     Attack::updateAll(player1);
     Item::updateAll(player1);
     scoreGame(0);
-/*
+
     if(player1->health <= 0) {
-        Gameover();
+        endgame = true;
         return;
     }
-*/
+
     if(score < 600){
         mapOffset -= ( 3 + score / 100);
     }else{
@@ -88,7 +92,7 @@ void Game::update() {
         highScore = score;
     }
 
-    if (mapOffset <= -mapWidth) {
+    if (mapOffset <= -SCREEN_WIDTH) {
         switchToNextMap();
     }
 /*
@@ -127,10 +131,10 @@ void Game::loadMaps() {
     mapTextures.push_back(IMG_LoadTexture(renderer, "img//kiri_no_mura.png"));
 }
 
-void Game::renderMenu(SDL_Renderer* renderer, SDL_Texture* menuTexture) {
+void Game::renderMenu(SDL_Renderer* renderer, SDL_Texture* texture) {
 
-    menuTexture = IMG_LoadTexture(renderer, "img//Menu.png");
-    SDL_RenderCopy(renderer, menuTexture, NULL, NULL);
+    texture = IMG_LoadTexture(renderer, "img//Menu.png");
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
 
     SDL_RenderPresent( renderer );
 }
@@ -149,24 +153,24 @@ void Game::processInput() {
         if (e.type == SDL_QUIT) {
             running = false;
         }
-       /* if (endgame && e.type == SDL_KEYDOWN) {
+        if (endgame && e.type == SDL_KEYDOWN) {
             if (e.key.keysym.sym == SDLK_r) {
-//                resetGame();
+                resetGame();
             } else if (e.key.keysym.sym == SDLK_q) {
                 running = false;
             }
-        }*/
+        }
         if (e.type == SDL_KEYDOWN) {
             if (inMenu && e.key.keysym.sym == SDLK_UP) {
                 inMenu = false;
             }
         }
-        if (!inMenu) {
+        if (!inMenu && !endgame) {
             player1->handleEvent(e);
         }
     }
 }
-/*
+
 void Game::resetGame() {
     endgame = false;
     score = 0;
@@ -183,18 +187,17 @@ void Game::resetGame() {
     Attack::attacks.clear();
     Item::items.clear();
 }
-*/
+
 void Game::render() {
      if (inMenu) {
         renderMenu(renderer, texture);
         return;
     }
-
- /*   if (endgame) {
-        renderEnd();
+    if(endgame) {
+        Gameover(renderer, texture);
         return;
     }
-*/
+
     SDL_SetRenderDrawColor(renderer, 80, 80, 80, 255);
     SDL_RenderClear(renderer);
 
@@ -212,11 +215,11 @@ void Game::render() {
     SDL_Rect nextMap = { mapOffset + SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
     SDL_RenderFillRect(renderer, &nextMap);
 */
-    SDL_Rect currentMapRect = { mapOffset, 0, mapWidth, SCREEN_HEIGHT };
+    SDL_Rect currentMapRect = { mapOffset, 0, mapWidth , SCREEN_HEIGHT };
     SDL_RenderCopy(renderer, mapTextures[currentMapIndex], NULL, &currentMapRect);
 
     if (mapOffset + SCREEN_WIDTH > mapWidth) {
-        int nextMapIndex = (currentMapIndex + 1) % mapTextures.size();
+        int nextMapIndex = (currentMapIndex + 1) % (mapTextures.size());
         SDL_Rect nextMapRect = { mapOffset + mapWidth, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
         SDL_RenderCopy(renderer, mapTextures[nextMapIndex], NULL, &nextMapRect);
     }
@@ -248,16 +251,13 @@ void Game::renderText(SDL_Renderer* renderer, TTF_Font* font, const std::string&
 }
 
 
-void Game::renderEnd() {
-    // Clear screen
+void Game::Gameover() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    // Vẽ ảnh game over nếu có
     if (endTexture) {
         SDL_RenderCopy(renderer, endTexture, NULL, NULL);
     } else {
-        // Fallback nếu không có ảnh
         SDL_SetRenderDrawColor(renderer, 50, 0, 0, 255);
         SDL_Rect background = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
         SDL_RenderFillRect(renderer, &background);
